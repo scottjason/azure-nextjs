@@ -1,3 +1,4 @@
+import * as React from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { Inter } from 'next/font/google';
@@ -22,7 +23,15 @@ export const getServerSideProps: GetServerSideProps<{ data: Data }> = async () =
 };
 
 export default function Home(props: Data) {
-  console.log('Home props', props);
+  React.useEffect(() => {
+    const makeReq = async () => {
+      console.log('Home props', props);
+      const res = await fetch('/api/hello');
+      const json = await res.json();
+      console.log('serverless api response', json);
+    };
+    makeReq();
+  }, []);
   return (
     <>
       <Head>
